@@ -4,10 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/eikes/Documents/shooter/src/baseClasses/InGameObject.java</file>
-            <file>file:/C:/Users/eikes/Documents/shooter/src/startupScreen/StartupScreen.java</file>
-            <file>file:/C:/Users/eikes/Documents/shooter/src/mygame/lavaLevel/LavaLevel.java</file>
-            <file>file:/C:/Users/eikes/Documents/shooter/src/mygame/Main.java</file>
+            <file>file:/C:/Users/eikes/Documents/shooter/src/baseClasses/Weapon.java</file>
+            <file>file:/C:/Users/eikes/Documents/shooter/src/game/weapons/Fist.java</file>
+            <file>file:/C:/Users/eikes/Documents/shooter/src/game/lavaEnvironment/Zahnrad.java</file>
+            <file>file:/C:/Users/eikes/Documents/shooter/src/game/lavaEnvironment/LavaEnvironment.java</file>
+            <file>file:/C:/Users/eikes/Documents/shooter/src/baseClasses/Player.java</file>
             <file>file:/C:/Users/eikes/Documents/shooter/src/baseClasses/Environment.java</file>
+            <file>file:/C:/Users/eikes/Documents/shooter/src/game/Main.java</file>
         </group>
     </open-files>
 </project-private>

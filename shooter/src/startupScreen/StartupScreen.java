@@ -50,8 +50,8 @@ public class StartupScreen extends Application{
         final TextField playerEnterName = new TextField();
         gridPane.add(playerEnterName,0,4);
         
-        /*
-        uncomment if musicfile is availeble
+        /**
+        * uncomment if musicfile is availeble
         */
         //musicFile = "Assets/Sounds/ScreenSound.mp3";
         //sound = new Media(new File(musicFile).toURI().toString());
@@ -61,10 +61,15 @@ public class StartupScreen extends Application{
         Button button = new Button("ok");
         button.setOnAction(new EventHandler<ActionEvent>(){
             @Override public void handle(ActionEvent e){
-                players.add(new Player(playerEnterName.getText()));
+                Player myself = new Player(playerEnterName.getText());
+                players.add(myself);
                 playerCount++;
+                /**
+                 * enter functionality to wait for other 
+                 * players in multiplayer (not done yet)
+                 */
                 if(playerCount == numPlayers){
-                    spielstand.getInstance().initialize(players);
+                    spielstand.getInstance().initialize(players,myself);
                     stage.close();
                 }
             }
@@ -72,8 +77,8 @@ public class StartupScreen extends Application{
         gridPane.add(button,0,8);
 
         Scene scene = new Scene(gridPane,300,275);
-        /*
-        uncomment with right path if css is availeble
+        /**
+        * uncomment with right path if css is availeble
         */
         //scene.getStylesheets().add("assets/Style/StyleSheet.css");
         stage.setScene(scene);
