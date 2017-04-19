@@ -40,7 +40,7 @@ public class LavaEnvironment extends Environment{
         for(int i = -20; i < 20; i++){
             Zahnrad zahnrad = new Zahnrad(((Spatial) initializeLevel
                     .get("Zahnrad").clone()));
-            Vector3f translation = new Vector3f(0.0f,-25,-i * 8 *7.9f);
+            Vector3f translation = new Vector3f(0.0f,-25,i * 8 *7.9f);
             zahnrad.getSpatial().scale(8);
             zahnrad.getSpatial().setLocalTranslation(position.add(translation));
             zahnraeder.add(zahnrad);
@@ -81,11 +81,12 @@ public class LavaEnvironment extends Environment{
         for (Zahnrad zahnrad: zahnraeder){
             Vector3f zahnradPosition = zahnrad.getRigidBodyControl().getPhysicsLocation();
             if(zahnradPosition.distance(position) > renderRadius){
-                if(zahnradPosition.x < position.x){
+                                    System.out.println(zahnradPosition.z);
+                if(zahnradPosition.z > position.z + 20 * 8 *7.9){
                     zahnrad.getRigidBodyControl().setPhysicsLocation(zahnradPosition
                         .add(new Vector3f(0.0f,0.0f,-40 * 8 *7.9f)));
                 }
-                else{
+                else if(zahnradPosition.z < position.z + 20 * 8 *7.9){
                     zahnrad.getRigidBodyControl().setPhysicsLocation(zahnradPosition
                         .add(new Vector3f(0.0f,0.0f,40 * 8 *7.9f)));
                 }

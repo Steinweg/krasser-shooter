@@ -29,7 +29,6 @@ public class InGameObject{
 
     }
 
-    
     public void initializeRigidBodyControl(int weight){
         CollisionShape sceneShape =
             CollisionShapeFactory.createMeshShape(spatial);
