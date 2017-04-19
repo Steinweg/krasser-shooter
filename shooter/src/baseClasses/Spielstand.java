@@ -13,6 +13,7 @@ import java.util.List;
  * @author eikes
  */
 public class Spielstand {
+   private Player myself;
    private HashMap<Player, Integer> playerDeathCount;
    private static Spielstand ourInstance = new Spielstand();
 
@@ -20,16 +21,30 @@ public class Spielstand {
         return ourInstance;
     }
 
-    public void initialize(List<Player> players){
+    public void initialize(List<Player> players, Player myself){
+        this.myself = myself;
         playerDeathCount = new HashMap<>();
-        for(Player player :players)
+        for(Player player : players){
             playerDeathCount.put(player,0);
+        }
     }
 
-    public void addDeath(Player player){
+    
+    /**
+     * function handels death of a Player in game
+     * @param died player which died 
+     * @param killer if player who died killed himself, 
+     * just give null as second parameter 
+     */
+    public void death(Player died, Player killer){
         try {
-            if (playerDeathCount.containsKey(player)) {
-                playerDeathCount.put(player, playerDeathCount.get(player) + 1);
+            if (playerDeathCount.containsKey(died) && 
+                    playerDeathCount.containsKey(killer)) {
+                playerDeathCount.put(died, playerDeathCount.get(died) + 1);
+                playerDeathCount.put(killer, playerDeathCount.get(killer) - 1);
+            }
+            else if(playerDeathCount.containsKey(died) && killer == null){
+                playerDeathCount.put(died, playerDeathCount.get(died) + 1);
             }
             else {
                 throw new IllegalArgumentException("Player doesn't exist, or game wasn't initialized");
@@ -42,6 +57,10 @@ public class Spielstand {
         
     }
 
+    public Player getMyself(){
+        return myself;
+    }
+    
     private Spielstand() {
     }   
     

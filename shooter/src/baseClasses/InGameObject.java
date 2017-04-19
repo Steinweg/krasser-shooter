@@ -5,7 +5,10 @@
  */
 package baseClasses;
 
-import com.jme3.math.Vector3f;
+import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
+import com.jme3.scene.Spatial;
 
 /**
  *
@@ -13,20 +16,37 @@ import com.jme3.math.Vector3f;
  */
 
 public class InGameObject{
-    private Vector3f position;
+    
+    protected Spatial spatial;
+    protected RigidBodyControl rigitBodyControl;
 
-    public InGameObject(){}
-
-    public InGameObject(Vector3f position){
+    public InGameObject(Spatial spatial){
         /**
          *
-         * @param Vector3f to determine position of object
+         * @param spatial for the visual representation of the Object
          */
-        this.position = position;
+        this.spatial = spatial;
 
     }
 
+    
+    public void initializeRigidBodyControl(int weight){
+        CollisionShape sceneShape =
+            CollisionShapeFactory.createMeshShape(spatial);
+        rigitBodyControl = new RigidBodyControl(sceneShape, weight);
+        spatial.addControl(rigitBodyControl);
+    }
+    
     public InGameObject copy(){
-        return new InGameObject(position);
+        return new InGameObject(spatial);
+       
+    }
+    
+    public Spatial getSpatial(){
+        return spatial;
+    }
+    
+    public RigidBodyControl getRigidBodyControl(){
+        return rigitBodyControl;
     }
 }
