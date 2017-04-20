@@ -55,11 +55,15 @@ public class Player{
     }
     
     public Weapon changeWeapon(){
-        if(currentWeapon < weapons.size()-1){
+        if(currentWeapon < weapons.size() - 1){
             currentWeapon++;
         }
         else{
             currentWeapon = 0;
+        }
+        System.out.println(weapons.size());
+        for(Weapon weapon: weapons){
+            System.out.println(weapon.getPathToHitMarkTexture());
         }
         return weapons.get(currentWeapon);
     }
@@ -83,12 +87,8 @@ public class Player{
         return characterControl;
     }
     
-    public void setPosition(Vector3f position){
-        this.position = position;
-    }
-    
     public Vector3f getPosition(){
-        return position;
+        return characterControl.getPhysicsLocation();
     }
     
 }

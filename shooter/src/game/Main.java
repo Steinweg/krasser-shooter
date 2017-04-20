@@ -14,6 +14,7 @@ import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.light.DirectionalLight;
 import com.jme3.math.Vector3f;
 import com.jme3.math.Ray;
 import com.jme3.renderer.RenderManager;
@@ -30,7 +31,7 @@ import startupScreen.StartupScreen;
 import baseClasses.Player;
 import baseClasses.Spielstand;
 import baseClasses.InGameObject;
-import com.jme3.light.DirectionalLight;
+import baseClasses.Weapon;
 
 import game.lavaEnvironment.LavaEnvironment;
 
@@ -76,8 +77,7 @@ public class Main extends SimpleApplication{
                 new Vector3f(0.0f, -5f, 0.0f));
         sceneModel = lavaLevel.getBasicNode();
         shootables = new Node();
-        for (InGameObject levelObject:lavaLevel.getObjects(myself
-                .getCharacterControl().getPhysicsLocation())){
+        for(InGameObject levelObject : lavaLevel.getObjects()){
             shootables.attachChild(levelObject.getSpatial().clone());
             rootNode.attachChild(levelObject.getSpatial());
             bulletAppState.getPhysicsSpace().add(levelObject.getRigidBodyControl());
@@ -101,8 +101,11 @@ public class Main extends SimpleApplication{
     @Override
     public void simpleUpdate(float tpf) {
         lavaLevel.updateEnvironment(tpf);
-        lavaLevel.translateZahnraeder(myself.getCharacterControl()
-                .getPhysicsLocation());
+        lavaLevel.translateZahnraeder(myself.getPosition());
+        if(lavaLevel.weaponInRadius(myself.getPosition())){
+            myself.addWeapon(lavaLevel.getWeaponInRadius());
+            rootNode.detachChild(lavaLevel.getWeaponInRadius().getSpatial());
+        }
         camDir.set(cam.getDirection()).multLocal(0.6f);
         camLeft.set(cam.getLeft()).multLocal(0.4f);
         walkDirection.set(0, 0, 0);
@@ -126,7 +129,7 @@ public class Main extends SimpleApplication{
     
     @Override
     public void simpleRender(RenderManager rm){
-
+       
     }
     
     private void initMyself(){
@@ -253,8 +256,6 @@ public class Main extends SimpleApplication{
         }
         else if (name.equals("changeWeapon") && isPressed){
             myself.changeWeapon();
-            guiNode.detachChild(crossHair);
-            initCrossHairs();
         }
         else if(name.equals("switchToSnipeState") && isPressed){
             inputManager.deleteTrigger("Left",new KeyTrigger(KeyInput.KEY_A));

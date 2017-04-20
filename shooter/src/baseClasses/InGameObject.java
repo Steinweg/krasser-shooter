@@ -9,6 +9,7 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.scene.Spatial;
+import com.jme3.math.Vector3f;
 
 /**
  *
@@ -47,5 +48,9 @@ public class InGameObject{
     
     public RigidBodyControl getRigidBodyControl(){
         return rigitBodyControl;
+    }
+    
+    public Vector3f getPosition(){
+        return rigitBodyControl.getPhysicsLocation();
     }
 }
