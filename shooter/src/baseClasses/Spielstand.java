@@ -6,6 +6,7 @@
 package baseClasses;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class Spielstand {
    private Player myself;
+   private ArrayList<Player> players;
    private HashMap<Player, Integer> playerDeathCount;
    private static Spielstand ourInstance = new Spielstand();
 
@@ -22,13 +24,35 @@ public class Spielstand {
     }
 
     public void initialize(List<Player> players, Player myself){
+        this.players = new ArrayList();
         this.myself = myself;
         playerDeathCount = new HashMap<>();
+        this.players.addAll(players);
         for(Player player : players){
             playerDeathCount.put(player,0);
         }
     }
 
+    public void update(){
+        //ArrayList<String> 
+        for(Player player:players){
+            if(player.died()){
+                playerDeathCount.put(player, playerDeathCount.get(player) - 1);
+                System.out.println(player.nameProperty() + " died");
+            }
+            if(player.killedSomebody()){
+                playerDeathCount.put(player, playerDeathCount.get(player) + 1);
+                
+            }
+        }
+    }
+    
+    public Player getMyself(){
+        return myself;
+    }
+    
+    private Spielstand() {
+    }
     
     /**
      * function handels death of a Player in game
@@ -36,7 +60,7 @@ public class Spielstand {
      * @param killer if player who died killed himself, 
      * just give null as second parameter 
      */
-    public void death(Player died, Player killer){
+    private void death(Player died, Player killer){
         try {
             if (playerDeathCount.containsKey(died) && 
                     playerDeathCount.containsKey(killer)) {
@@ -56,12 +80,5 @@ public class Spielstand {
         }
         
     }
-
-    public Player getMyself(){
-        return myself;
-    }
-    
-    private Spielstand() {
-    }   
     
 }

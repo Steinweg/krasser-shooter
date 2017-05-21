@@ -27,10 +27,14 @@ public class Player{
     private StringProperty name;
     private ArrayList<Weapon> weapons;
     private CharacterControl characterControl;
+    private boolean died;
+    private boolean killedSomebody;
+    private String killed;
     
     public Player(String name){
         this.name = new ReadOnlyStringWrapper(name);
-        currentWeapon = 0;        
+        currentWeapon = 0;
+        health = 100;        
     }
 
     public void initWeapons(Spatial fist){
@@ -38,8 +42,12 @@ public class Player{
         weapons.add(new Fist(fist));
     }
     
-    public void shot(int damage){
+    public void damage(int damage){
         health -= damage;
+        if(health < 0){
+            died = true;
+            health = 100;
+        }
     }
 
     public StringProperty nameProperty(){
@@ -55,11 +63,15 @@ public class Player{
     }
     
     public Weapon changeWeapon(){
-        if(currentWeapon < weapons.size()-1){
+        if(currentWeapon < weapons.size() - 1){
             currentWeapon++;
         }
         else{
             currentWeapon = 0;
+        }
+        System.out.println(weapons.size());
+        for(Weapon weapon: weapons){
+            System.out.println(weapon.getPathToHitMarkTexture());
         }
         return weapons.get(currentWeapon);
     }
@@ -83,12 +95,27 @@ public class Player{
         return characterControl;
     }
     
-    public void setPosition(Vector3f position){
-        this.position = position;
-    }
-    
     public Vector3f getPosition(){
-        return position;
+        return characterControl.getPhysicsLocation();
     }
     
+    public boolean killedSomebody(){
+        if(killedSomebody){
+            killedSomebody = false;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public boolean died(){
+        return died;
+    }
+    
+    public void respawn(){
+        health = 100;
+        characterControl.setPhysicsLocation(new Vector3f(0,30,0));
+        died = false;
+    }
 }
