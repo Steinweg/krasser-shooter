@@ -46,6 +46,12 @@ public class Environment{
         
     }
     
+    public void reactToPlayer(Player player){
+        if(player.getPosition().y < -100){
+            player.damage(100);
+        }
+    }
+    
     /**
      * 
      * method is supposed to be used to verify wether method getWeaponInRadius
@@ -57,7 +63,7 @@ public class Environment{
         int index = -1;
         for(Weapon weapon:weapons){
             if(!(weapon == null)){
-                if(position.distance(weapon.getPosition()) < 5){
+                if(position.distance(weapon.getPosition()) < 10){
                     inDistanceToPlayer = weapon;
                     index = weapons.indexOf(weapon);
                 }

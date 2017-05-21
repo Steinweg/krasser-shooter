@@ -69,6 +69,12 @@ public class LavaEnvironment extends Environment{
         rotateZahnraeder(tpf);
         makeWeaponMoves(tpf);
     }
+   
+    @Override
+    public void reactToPlayer(Player player){
+        super.reactToPlayer(player);
+        translateZahnraeder(player.getPosition());
+    }
     
     @Override
     public Node getBasicNode(){
@@ -81,7 +87,7 @@ public class LavaEnvironment extends Environment{
         return environmentObjects.values();
     }
         
-    public void translateZahnraeder(Vector3f position){
+    private void translateZahnraeder(Vector3f position){
         for (Zahnrad zahnrad: zahnraeder){
             Vector3f zahnradPosition = zahnrad.getRigidBodyControl().getPhysicsLocation();
             if(zahnradPosition.distance(position) > renderRadius){

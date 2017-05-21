@@ -30,7 +30,7 @@ import baseClasses.Spielstand;
  */
 public class StartupScreen extends Application{
     
-    private static ArrayList<Player> players = new ArrayList<>();
+    private static ArrayList<Player> players;
     private static int playerCount = 0;
     private static int numPlayers = 1;
     private Spielstand spielstand;
@@ -39,6 +39,7 @@ public class StartupScreen extends Application{
     private MediaPlayer mediaPlayer;
     
     @Override public void start(final Stage stage){
+        players = new ArrayList<>();
         stage.setTitle("coolest shooter you will ever see");
         
         GridPane gridPane = new GridPane();
@@ -69,6 +70,7 @@ public class StartupScreen extends Application{
                  * players in multiplayer (not done yet)
                  */
                 if(playerCount == numPlayers){
+                    System.out.println(players.size());
                     spielstand.getInstance().initialize(players,myself);
                     stage.close();
                 }

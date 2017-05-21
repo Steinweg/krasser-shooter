@@ -19,6 +19,7 @@ import com.jme3.bullet.util.CollisionShapeFactory;
  */
 public class Weapon extends InGameObject{
     
+   private int damage;
     
     public Weapon(Spatial spatial){
         super(spatial);
