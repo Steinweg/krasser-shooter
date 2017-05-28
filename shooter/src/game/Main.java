@@ -175,6 +175,7 @@ public class Main extends SimpleApplication{
         if(lavaLevel.weaponInRadius(myself.getPosition())){
             myself.addWeapon(lavaLevel.getWeaponInRadius());
             rootNode.detachChild(lavaLevel.getWeaponInRadius().getSpatial());
+            shootables.detachChild(lavaLevel.getWeaponInRadius().getSpatial());
         }
         camDir.set(cam.getDirection()).multLocal(0.6f);
         camLeft.set(cam.getLeft()).multLocal(0.4f);

@@ -11,6 +11,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -50,6 +52,8 @@ public class StartupScreen extends Application{
         
         final TextField playerEnterName = new TextField();
         gridPane.add(playerEnterName,0,4);
+        Label selectLevel = new Label("select a level you want to play");
+        gridPane.add(selectLevel,0,8);
         
         /**
         * uncomment if musicfile is availeble
@@ -72,12 +76,25 @@ public class StartupScreen extends Application{
                 if(playerCount == numPlayers){
                     System.out.println(players.size());
                     spielstand.getInstance().initialize(players,myself);
-                    stage.close();
                 }
+                /*
+                Thread level = new Thread(){
+                    @Override
+                    public void run(){
+                        
+                    }
+                };
+                */
+                stage.close();
             }
         } );
-        gridPane.add(button,0,8);
+        gridPane.add(button,0,20);
 
+        ToggleGroup levelControl = new ToggleGroup();
+        RadioButton buttonLava = new RadioButton("lavaLevel");
+        buttonLava.setToggleGroup(levelControl);
+        gridPane.add(buttonLava,0,9);
+        
         Scene scene = new Scene(gridPane,300,275);
         /**
         * uncomment with right path if css is availeble
