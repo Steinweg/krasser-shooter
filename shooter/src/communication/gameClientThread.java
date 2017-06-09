@@ -9,11 +9,9 @@ import java.net.Socket;
 import java.net.InetSocketAddress;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.io.IOException;
 
 import baseClasses.Spielstand;
 
@@ -49,7 +47,7 @@ public class gameClientThread extends Thread{
         this.host = new InetSocketAddress(hostAddress, portnum);
         gameSocket = new Socket(hostName,portnum);
 
-        gameSocket.setSoTimeout(30000);
+        gameSocket.setSoTimeout(3000);
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(gameSocket.getInputStream()));
         
@@ -69,42 +67,19 @@ public class gameClientThread extends Thread{
     
     public void update(BufferedReader in, PrintWriter out){
         if(gameSocket.isConnected()){
-            String message = "Eike ist der Boss";
+            String message = Spielstand.getInstance().toString();
             try{
                 out.print(message + "\r\n");
-                out.flush();
-                
+                out.flush();                
                 String reply = in.readLine();
-                System.out.println(reply);
             }
             catch(Exception e){
                 e.printStackTrace();
             }
-            /*try{
-                gameClientOutputThread outPut = new gameClientOutputThread(in);
-                outPut.start();
-            }
-            catch(Exception e){
-                System.out.println("error while trying to write message to "
-                        + "server");
-                e.printStackTrace();
-            }
-            int len;
-            byte[] b = new byte[100];
-            try{
-                while((len = in.read(b)) != -1){
-                    String message = new String(b);
-                    System.out.println(message);
-                }   
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }*/
         }
         else{
             try{
                 gameSocket.connect(host);
-            
             }
             catch(UnknownHostException e){
                 System.out.println("failed to connect to host: " + 

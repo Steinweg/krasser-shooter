@@ -60,6 +60,18 @@ public class Spielstand {
     public boolean endOfGame(){
        return endOfGame;
     } 
+
+    @Override
+    public String toString(){
+        String message = myself.nameProperty().getValue() + "\n";
+        for(Player player:players){
+            message += "[" + player.nameProperty().getValue();
+            message += "," + player.getPosition();
+            message += "," + playerDeathCount.get(player) + "],";
+        }
+        message += "\n";
+        return message;
+    }
     
     /**
      * function handels death of a Player in game
