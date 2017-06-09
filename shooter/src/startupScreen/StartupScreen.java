@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package startupScreen;
 
 import javafx.application.Application;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 import baseClasses.Player;
 import baseClasses.Spielstand;
+import communication.gameClientThread;
 
 /**
  *
@@ -39,8 +41,16 @@ public class StartupScreen extends Application{
     private String musicFile;
     private Media sound;
     private MediaPlayer mediaPlayer;
+    private ToggleGroup levelControl;
+    private RadioButton buttonLava;
+    
+    public static void main(String[] args) {        
+        //Application.launch(StartupScreen.class ,args);
+        launch(args);
+    }
     
     @Override public void start(final Stage stage){
+        
         players = new ArrayList<>();
         stage.setTitle("coolest shooter you will ever see");
         
@@ -52,6 +62,7 @@ public class StartupScreen extends Application{
         
         final TextField playerEnterName = new TextField();
         gridPane.add(playerEnterName,0,4);
+        
         Label selectLevel = new Label("select a level you want to play");
         gridPane.add(selectLevel,0,8);
         
@@ -77,21 +88,24 @@ public class StartupScreen extends Application{
                     System.out.println(players.size());
                     spielstand.getInstance().initialize(players,myself);
                 }
+                
                 /*
                 Thread level = new Thread(){
                     @Override
                     public void run(){
-                        
+                        if(levelControl.getSelectedToggle().equals(buttonLava)){
+                        }
                     }
-                };
-                */
+                };*/
+                
+                
                 stage.close();
             }
         } );
         gridPane.add(button,0,20);
 
-        ToggleGroup levelControl = new ToggleGroup();
-        RadioButton buttonLava = new RadioButton("lavaLevel");
+        levelControl = new ToggleGroup();
+        buttonLava = new RadioButton("lavaLevel");
         buttonLava.setToggleGroup(levelControl);
         gridPane.add(buttonLava,0,9);
         

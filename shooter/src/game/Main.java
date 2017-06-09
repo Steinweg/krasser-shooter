@@ -38,10 +38,13 @@ import baseClasses.Player;
 import baseClasses.Spielstand;
 import baseClasses.InGameObject;
 import baseClasses.Weapon;
+import communication.gameClientThread;
 
 import game.lavaEnvironment.LavaEnvironment;
 
 public class Main extends SimpleApplication{
+
+    private static gameClientThread client;
 
     protected Geometry hitMark;
     private LavaEnvironment lavaLevel;
@@ -66,6 +69,8 @@ public class Main extends SimpleApplication{
     
     public static void main(String[] args) {        
         Application.launch(StartupScreen.class ,args);
+        client = new gameClientThread("localhost",19999);
+        client.start();
         Main app = new Main();
         app.start();
     }

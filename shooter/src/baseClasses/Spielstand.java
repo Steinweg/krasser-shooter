@@ -17,6 +17,8 @@ public class Spielstand {
    private Player myself;
    private ArrayList<Player> players;
    private HashMap<Player, Integer> playerDeathCount;
+   private boolean endOfGame;
+
    private static Spielstand ourInstance = new Spielstand();
 
     public static Spielstand getInstance() {
@@ -24,6 +26,7 @@ public class Spielstand {
     }
 
     public void initialize(List<Player> players, Player myself){
+        endOfGame = false;
         this.players = new ArrayList();
         this.myself = myself;
         playerDeathCount = new HashMap<>();
@@ -53,6 +56,10 @@ public class Spielstand {
     
     private Spielstand() {
     }
+    
+    public boolean endOfGame(){
+       return endOfGame;
+    } 
     
     /**
      * function handels death of a Player in game
