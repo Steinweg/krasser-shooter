@@ -20,7 +20,7 @@ import com.jme3.math.Vector3f;
 
 public class Environment{
     protected HashMap<Vector3f,InGameObject> environmentObjects;
-    protected Node basicNode;
+    protected Spatial basicNode;
     protected ArrayList<Weapon> weapons = new ArrayList();
     protected Weapon inDistanceToPlayer;
     public Environment(){}
@@ -38,7 +38,7 @@ public class Environment{
         
     }
 
-    public Node getBasicNode(){
+    public Spatial getBasicNode(){
         return basicNode;
     }
     

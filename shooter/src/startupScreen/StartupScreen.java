@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import baseClasses.Player;
 import baseClasses.Spielstand;
-import communication.gameClientThread;
+import game.Main;
 
 /**
  *
@@ -94,10 +94,12 @@ public class StartupScreen extends Application{
                     @Override
                     public void run(){
                         if(levelControl.getSelectedToggle().equals(buttonLava)){
+                            Main game = new Main();
+                            game.start();
                         }
                     }
-                };*/
-                
+                };
+                */
                 
                 stage.close();
             }

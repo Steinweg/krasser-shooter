@@ -5,10 +5,11 @@
         <group>
             <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/startupScreen/StartupScreen.java</file>
             <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/baseClasses/Environment.java</file>
-            <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/communication/gameClientThread.java</file>
+            <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/baseClasses/Spielstand.java</file>
             <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/game/Main.java</file>
+            <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/baseClasses/InGameObject.java</file>
+            <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/baseClasses/Player.java</file>
             <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/game/lavaEnvironment/LavaEnvironment.java</file>
-            <file>file:/C:/Users/eikes/Documents/krasser-shooter/shooter/src/communication/gameClientOutputThread.java</file>
         </group>
     </open-files>
 </project-private>

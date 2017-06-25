@@ -8,6 +8,7 @@ package baseClasses;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+import communication.gameClientThread;
 
 /**
  *
@@ -21,9 +22,9 @@ public class Spielstand {
 
    private static Spielstand ourInstance = new Spielstand();
 
-    public static Spielstand getInstance() {
+   public static Spielstand getInstance() {
         return ourInstance;
-    }
+   }
 
     public void initialize(List<Player> players, Player myself){
         endOfGame = false;
@@ -73,13 +74,14 @@ public class Spielstand {
         return message;
     }
     
+    private void death(Player died, Player killer)
     /**
      * function handels death of a Player in game
      * @param died player which died 
      * @param killer if player who died killed himself, 
      * just give null as second parameter 
      */
-    private void death(Player died, Player killer){
+    {
         try {
             if (playerDeathCount.containsKey(died) && 
                     playerDeathCount.containsKey(killer)) {
@@ -90,7 +92,8 @@ public class Spielstand {
                 playerDeathCount.put(died, playerDeathCount.get(died) + 1);
             }
             else {
-                throw new IllegalArgumentException("Player doesn't exist, or game wasn't initialized");
+                throw new IllegalArgumentException(
+                        "Player doesn't exist, or game wasn't initialized");
             }
         }
         
@@ -99,5 +102,17 @@ public class Spielstand {
         }
         
     }
+    
+    public void renew(gameClientThread.SpielstandWriter spielstandWriter)
+    /**
+     * @param SpielstandWriter only available in gameClientThread
+     * to imitate C++ friend concept
+     */
+    {
+        for(Player player:players){
+            spielstandWriter.getPosition(player.nameProperty().getValue());
+        }
+    }
+    
     
 }
