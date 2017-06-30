@@ -28,14 +28,15 @@ import game.weapons.BasicRifle;
 public class LavaEnvironment extends Environment{
     private ArrayList<Zahnrad> zahnraeder;
     private BasicRifle basicRifle;
+    private InGameObject scene;
     private final float renderRadius = 1500;
     private DirectionalLight sun;
     private Node attached;
     
     public LavaEnvironment(HashMap<String,Spatial> initializeLevel, Vector3f position){
-        basicNode = new Node();
         zahnraeder = new ArrayList();
         attached = new Node();
+        
         environmentObjects = new HashMap();
         for(int i = -20; i < 20; i++){
             Zahnrad zahnrad = new Zahnrad(((Spatial) initializeLevel
@@ -50,6 +51,12 @@ public class LavaEnvironment extends Environment{
             zahnrad.initializeRigidBodyControl(0);
             environmentObjects.put(position.add(translation),zahnrad);
         }
+        
+        scene = new InGameObject(
+                initializeLevel.get("sceneTerrain").clone().scale(10));
+        scene.getSpatial().setLocalTranslation(0,-35,0);
+        scene.initializeRigidBodyControl(0);
+        
         basicRifle = new BasicRifle((Spatial) initializeLevel.get("BasicRifle"));
         basicRifle.getRigidBodyControl().setPhysicsLocation(position
                 .add(new Vector3f(0,-20,20f)));
@@ -57,11 +64,9 @@ public class LavaEnvironment extends Environment{
                 .add(new Vector3f(0,-20,20f)));
         basicRifle.getSpatial().scale((float)0.3);
         basicRifle.getSpatial().rotate(0, 0,(float)(3.14159265358979*0.5));
+        
         environmentObjects.put(position.add(new Vector3f(0,-20,20f)),basicRifle);
         weapons.add(basicRifle);
-        sun = new DirectionalLight();
-        sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f));
-        basicNode.addLight(sun);
     }
     
     @Override
@@ -74,24 +79,29 @@ public class LavaEnvironment extends Environment{
     public void reactToPlayer(Player player){
         super.reactToPlayer(player);
         translateZahnraeder(player.getPosition());
+        translateScene(player.getPosition());
     }
     
-    @Override
-    public Node getBasicNode(){
-        return basicNode;
+    public InGameObject getScene(){
+        return scene;
     }
-    
-    
   
     public Collection<InGameObject> getObjects(){
         return environmentObjects.values();
+    }
+    
+    private void translateScene(Vector3f playerPosition){
+        if(playerPosition.distance(scene.getPosition()) > renderRadius-1000){
+            float x = playerPosition.x;
+            float z = playerPosition.z;
+            scene.getRigidBodyControl().setPhysicsLocation(new Vector3f(x,-35,z));
+        }
     }
         
     private void translateZahnraeder(Vector3f position){
         for (Zahnrad zahnrad: zahnraeder){
             Vector3f zahnradPosition = zahnrad.getRigidBodyControl().getPhysicsLocation();
             if(zahnradPosition.distance(position) > renderRadius){
-                                    System.out.println(zahnradPosition.z);
                 if(zahnradPosition.z > position.z + 20 * 8 *7.9){
                     zahnrad.getRigidBodyControl().setPhysicsLocation(zahnradPosition
                         .add(new Vector3f(0.0f,0.0f,-40 * 8 *7.9f)));
@@ -106,10 +116,7 @@ public class LavaEnvironment extends Environment{
     
     private void rotateZahnraeder(float tpf){
         for(int i = 0; i < zahnraeder.size(); i++){
-            Vector3f angularVelocity = new Vector3f(0,(float)0.5*tpf,0);
-            zahnraeder.get(i).getRigidBodyControl().setFriction(500);
             if(i % 2 == 0){
-                zahnraeder.get(i).getRigidBodyControl().setAngularVelocity(angularVelocity);
                 zahnraeder.get(i).getSpatial().rotate(0,(float) 0.25*tpf,0);
             }
             else{

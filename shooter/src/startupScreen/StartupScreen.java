@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package startupScreen;
 
 import javafx.application.Application;
@@ -11,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 
 import baseClasses.Player;
 import baseClasses.Spielstand;
+import game.Main;
 
 /**
  *
@@ -37,8 +41,16 @@ public class StartupScreen extends Application{
     private String musicFile;
     private Media sound;
     private MediaPlayer mediaPlayer;
+    private ToggleGroup levelControl;
+    private RadioButton buttonLava;
+    
+    public static void main(String[] args) {        
+        //Application.launch(StartupScreen.class ,args);
+        launch(args);
+    }
     
     @Override public void start(final Stage stage){
+        
         players = new ArrayList<>();
         stage.setTitle("coolest shooter you will ever see");
         
@@ -50,6 +62,9 @@ public class StartupScreen extends Application{
         
         final TextField playerEnterName = new TextField();
         gridPane.add(playerEnterName,0,4);
+        
+        Label selectLevel = new Label("select a level you want to play");
+        gridPane.add(selectLevel,0,8);
         
         /**
         * uncomment if musicfile is availeble
@@ -72,12 +87,30 @@ public class StartupScreen extends Application{
                 if(playerCount == numPlayers){
                     System.out.println(players.size());
                     spielstand.getInstance().initialize(players,myself);
-                    stage.close();
                 }
+                
+                /*
+                Thread level = new Thread(){
+                    @Override
+                    public void run(){
+                        if(levelControl.getSelectedToggle().equals(buttonLava)){
+                            Main game = new Main();
+                            game.start();
+                        }
+                    }
+                };
+                */
+                
+                stage.close();
             }
         } );
-        gridPane.add(button,0,8);
+        gridPane.add(button,0,20);
 
+        levelControl = new ToggleGroup();
+        buttonLava = new RadioButton("lavaLevel");
+        buttonLava.setToggleGroup(levelControl);
+        gridPane.add(buttonLava,0,9);
+        
         Scene scene = new Scene(gridPane,300,275);
         /**
         * uncomment with right path if css is availeble

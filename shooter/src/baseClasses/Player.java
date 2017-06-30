@@ -96,7 +96,10 @@ public class Player{
     }
     
     public Vector3f getPosition(){
-        return characterControl.getPhysicsLocation();
+        if(characterControl != null){
+            return characterControl.getPhysicsLocation();
+        }
+        return new Vector3f(0,0,0);
     }
     
     public boolean killedSomebody(){
